@@ -1,0 +1,952 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jerry's Blog - 碎碎念" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="开关机12shutdown -d now #立即关机reboot #重启
+开机模式切换设置开机之后，进入到何种模式（图像界面、单用户、多用户等）
+123456789101112131415161718192021222324252627[root@linux1 ~]# vi /etc/inittab # inittab is only used by upstart for the default">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 常用命令">
+<meta property="og:url" content="http://myoss.github.io/2016/linux-常用命令/index.html">
+<meta property="og:site_name" content="Jerry's Blog - 碎碎念">
+<meta property="og:description" content="开关机12shutdown -d now #立即关机reboot #重启
+开机模式切换设置开机之后，进入到何种模式（图像界面、单用户、多用户等）
+123456789101112131415161718192021222324252627[root@linux1 ~]# vi /etc/inittab # inittab is only used by upstart for the default">
+<meta property="og:updated_time" content="2017-02-12T09:53:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 常用命令">
+<meta name="twitter:description" content="开关机12shutdown -d now #立即关机reboot #重启
+开机模式切换设置开机之后，进入到何种模式（图像界面、单用户、多用户等）
+123456789101112131415161718192021222324252627[root@linux1 ~]# vi /etc/inittab # inittab is only used by upstart for the default">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6241375170854913000,
+      author: '博主-Jerry'
+    }
+  };
+</script>
+
+  <title> linux 常用命令 | Jerry's Blog - 碎碎念 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-72820115-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0aed29b605b5125ea269404f8191671f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=500002217";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jerry's Blog - 碎碎念</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">我想就这样牵着 你的手不放开</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-28T16:56:00+08:00" content="2016-02-28">
+              2016-02-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/linux-常用命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/linux-常用命令/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/linux-常用命令/" class="leancloud_visitors" data-flag-title="linux 常用命令">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="开关机"><a href="#开关机" class="headerlink" title="开关机"></a>开关机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">shutdown <span class="_">-d</span> now <span class="comment">#立即关机</span></div><div class="line">reboot <span class="comment">#重启</span></div></pre></td></tr></table></figure>
+<h3 id="开机模式切换"><a href="#开机模式切换" class="headerlink" title="开机模式切换"></a>开机模式切换</h3><p>设置开机之后，进入到何种模式（图像界面、单用户、多用户等）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># vi /etc/inittab </span></div><div class="line"><span class="comment"># inittab is only used by upstart for the default runlevel.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># ADDING OTHER CONFIGURATION HERE WILL HAVE NO EFFECT ON YOUR SYSTEM.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># System initialization is started by /etc/init/rcS.conf</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Individual runlevels are started by /etc/init/rc.conf</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Ctrl-Alt-Delete is handled by /etc/init/control-alt-delete.conf</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Terminal gettys are handled by /etc/init/tty.conf and /etc/init/serial.conf,</span></div><div class="line"><span class="comment"># with configuration in /etc/sysconfig/init.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># For information on how to write upstart event handlers, or how</span></div><div class="line"><span class="comment"># upstart works, see init(5), init(8), and initctl(8).</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Default runlevel. The runlevels used are:</span></div><div class="line"><span class="comment">#   0 - halt (Do NOT set initdefault to this)</span></div><div class="line"><span class="comment">#   1 - Single user mode 单用户命令行模式</span></div><div class="line"><span class="comment">#   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</span></div><div class="line"><span class="comment">#   3 - Full multiuser mode 完整的多用户命令行模式</span></div><div class="line"><span class="comment">#   4 - unused</span></div><div class="line"><span class="comment">#   5 - X11 图形界面</span></div><div class="line"><span class="comment">#   6 - reboot (Do NOT set initdefault to this)</span></div><div class="line"><span class="comment">#</span></div><div class="line">id:3:initdefault:</div></pre></td></tr></table></figure>
+<p>从命令行模式切换到图形界面，需要在能够直接连接主机的地方（比如：VMware）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># startx</span></div><div class="line">[root@linux1 ~]<span class="comment"># init 5 #可能不起作用</span></div></pre></td></tr></table></figure>
+<p>在<code>VMware</code>虚拟主机模式下，从图形界面切换到命令行模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">windows系统快捷键：ctrl + alt + F1</div><div class="line"></div><div class="line">[root@linux1 ~]# init 3 #可能不起作用</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="shell命令"><a href="#shell命令" class="headerlink" title="shell命令"></a>shell命令</h3><p><code>Shell</code>是系统的用户界面，提供了用户与内核进行交互操作的一种接口。它接收用户输入的命令并把它送入内核去执行。<br>实际上<code>Shell</code>是一个命令解释器，它解释由用户输入的命令并且把它们送到内核。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 /]<span class="comment"># echo $SHELL #查看当前环境使用的shell命令解释器</span></div><div class="line">/bin/bash</div></pre></td></tr></table></figure>
+<h3 id="用户家目录"><a href="#用户家目录" class="headerlink" title="用户家目录"></a>用户家目录</h3><p><code>root</code>用户的家目录和其它账户的家目录位置不一样。<code>$HOME</code>和<code>~</code>都能代表当前用户的家目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@linux1 /]<span class="comment"># echo $HOME #查看当前用户的家目录</span></div><div class="line">/root</div><div class="line">[jerry@linux1 /]$ <span class="built_in">cd</span> ~ <span class="comment">#切换目录为当前用户的家目录</span></div><div class="line">[jerry@linux1 /]$ <span class="built_in">pwd</span> <span class="comment">#查看当前目录</span></div><div class="line">/home/jerry</div></pre></td></tr></table></figure>
+<h3 id="su命令"><a href="#su命令" class="headerlink" title="su命令"></a>su命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[jerry@linux1 /]$ su - root <span class="comment">#切换用户为：root</span></div><div class="line">Password:</div></pre></td></tr></table></figure>
+<h3 id="id命令"><a href="#id命令" class="headerlink" title="id命令"></a>id命令</h3><p><code>id</code>命令可以显示真实有效的用户ID(UID)和组ID(GID)。UID是对一个用户的单一身份标识。组ID（GID）则对应多个UID。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># id</span></div><div class="line">uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0<span class="_">-s</span>0:c0.c1023</div></pre></td></tr></table></figure>
+<h3 id="uname命令"><a href="#uname命令" class="headerlink" title="uname命令"></a>uname命令</h3><p><code>uname</code>是Linux命令用途显示当前操作系统名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># uname</span></div><div class="line">Linux</div><div class="line">[root@linux1 ~]<span class="comment"># uname -a</span></div><div class="line">Linux linux1.jerry.com 2.6.32-504.el6.x86_64 <span class="comment">#1 SMP Tue Sep 16 01:56:35 EDT 2014 x86_64 x86_64 x86_64 GNU/Linux</span></div><div class="line">[root@linux1 ~]<span class="comment"># uname -n</span></div><div class="line">linux1.jerry.com</div><div class="line">[root@linux1 ~]<span class="comment"># uname -in</span></div><div class="line">linux1.jerry.com x86_64</div><div class="line">[root@linux1 ~]<span class="comment"># uname -i</span></div><div class="line">x86_64</div><div class="line">[root@linux1 ~]<span class="comment"># uname -r</span></div><div class="line">2.6.32-504.el6.x86_64</div><div class="line">[root@linux1 ~]<span class="comment"># uname -s</span></div><div class="line">Linux</div><div class="line">[root@linux1 ~]<span class="comment"># uname -rs</span></div><div class="line">Linux 2.6.32-504.el6.x86_64</div></pre></td></tr></table></figure>
+<h3 id="date命令"><a href="#date命令" class="headerlink" title="date命令"></a>date命令</h3><p><code>date</code>命令打印或设置系统日期和时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># date</span></div><div class="line">Mon Feb 29 21:42:48 CST 2016</div></pre></td></tr></table></figure>
+<h3 id="连续执行多条命令"><a href="#连续执行多条命令" class="headerlink" title="连续执行多条命令"></a>连续执行多条命令</h3><p>如果每个命令被<code>;</code>所分隔，那么命令会连续的执行下去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># date; uname</span></div><div class="line">Mon Feb 29 21:44:18 CST 2016</div><div class="line">Linux</div><div class="line">[root@linux1 ~]<span class="comment"># date; unamed; ls #第二条命令出错了，但是第三天命令还是会执行</span></div><div class="line">Mon Feb 29 21:47:42 CST 2016</div><div class="line">-bash: unamed: <span class="built_in">command</span> not found</div><div class="line">anaconda-ks.cfg  Documents  install.log         Music     Public     Videos</div><div class="line">Desktop          Downloads  install.log.syslog  Pictures  Templates</div></pre></td></tr></table></figure>
+<p>如果每个命令被<code>&amp;&amp;</code>分隔，那么这些命令会一直执行下去，如果中间有错误的命令存在，则不再执行后面的命令，没错则执行到完为止</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># date&amp;&amp; unamed&amp;&amp; ls</span></div><div class="line">Mon Feb 29 21:49:05 CST 2016</div><div class="line">-bash: unamed: <span class="built_in">command</span> not found</div></pre></td></tr></table></figure>
+<p>如果每个命令被<code>||</code>分隔，如果命令遇到可以成功执行的命令，那么命令停止执行，即使后面还有正确的命令则后面的所有命令都将得不到执行。假如命令一开始就执行失败，那么就会执行<code>||</code>后的下一个命令，直到遇到有可以成功执行的命令为止，假如所有的都失败，则所有这些失败的命令都会被尝试执行一次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># date || unamed || ls</span></div><div class="line">Mon Feb 29 21:50:58 CST 2016</div><div class="line">[root@linux1 ~]<span class="comment"># unamed || date || ls</span></div><div class="line">-bash: unamed: <span class="built_in">command</span> not found</div><div class="line">Mon Feb 29 21:51:12 CST 2016</div><div class="line">[root@linux1 ~]<span class="comment"># unamed || dated || lsd</span></div><div class="line">-bash: unamed: <span class="built_in">command</span> not found</div><div class="line">-bash: dated: <span class="built_in">command</span> not found</div><div class="line">-bash: lsd: <span class="built_in">command</span> not found</div></pre></td></tr></table></figure>
+<h3 id="man命令操作手册"><a href="#man命令操作手册" class="headerlink" title="man命令操作手册"></a>man命令操作手册</h3><p>Linux系统提供了相对比较丰富的帮助手册（man），man是manual的缩写，在日常linux系统管理中经常用到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">man ls</div></pre></td></tr></table></figure>
+<h4 id="快捷键操作"><a href="#快捷键操作" class="headerlink" title="快捷键操作"></a>快捷键操作</h4><ul>
+<li>下一页<ul>
+<li>空格键</li>
+<li>回车键</li>
+</ul>
+</li>
+<li>上一页<ul>
+<li>B键</li>
+</ul>
+</li>
+</ul>
+<h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><p>输入<code>/bala</code>向下搜索字符串<code>bala</code>，输入<code>?bala</code>向上搜索字符串<code>bala</code>。<br><code>N键</code>继续关键字的下一个搜索，<code>N键</code>反向搜索关键字。</p>
+<h4 id="退出man"><a href="#退出man" class="headerlink" title="退出man"></a>退出man</h4><p><code>Q键</code>退出<code>man</code>命令</p>
+<h3 id="stat命令"><a href="#stat命令" class="headerlink" title="stat命令"></a>stat命令</h3><p><code>stat</code>打印信息节点(inode)内容 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># stat Videos/</span></div><div class="line">  File: `Videos/<span class="string">'</span></div><div class="line">  Size: 4096            Blocks: 8          IO Block: 4096   directory</div><div class="line">Device: fd00h/64768d    Inode: 275645      Links: 2</div><div class="line">Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)</div><div class="line">Access: 2015-12-28 06:34:48.950999982 +0800</div><div class="line">Modify: 2015-12-28 06:34:48.950999982 +0800</div><div class="line">Change: 2015-12-28 06:34:48.950999982 +0800</div><div class="line">[root@linux1 ~]# stat Public/</div><div class="line">  File: `Public/'</div><div class="line">  Size: 4096            Blocks: 8          IO Block: 4096   directory</div><div class="line">Device: fd00h/64768d    Inode: 275641      Links: 2</div><div class="line">Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)</div><div class="line">Access: 2015-12-28 06:34:48.950999982 +0800</div><div class="line">Modify: 2015-12-28 06:34:48.950999982 +0800</div><div class="line">Change: 2015-12-28 06:34:48.950999982 +0800</div></pre></td></tr></table></figure>
+<h3 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a>more命令</h3><p><code>more</code>在显示器上阅读文件的过滤器, 用于分页显示 (一次一屏) 文本. 这个版本非常基本. <code>less</code>提供了<code>more</code>的模拟, 并且做了增强</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># more install.log #查看文件，一次一屏</span></div></pre></td></tr></table></figure>
+<h4 id="快捷键操作-1"><a href="#快捷键操作-1" class="headerlink" title="快捷键操作"></a>快捷键操作</h4><ul>
+<li>下一页<ul>
+<li>空格键</li>
+</ul>
+</li>
+<li>上一页<ul>
+<li>B键</li>
+</ul>
+</li>
+<li>下一行<ul>
+<li>回车键</li>
+</ul>
+</li>
+<li>退出<ul>
+<li>Q键</li>
+</ul>
+</li>
+</ul>
+<h3 id="less命令"><a href="#less命令" class="headerlink" title="less命令"></a>less命令</h3><p><code>less</code>与<code>more</code>类似，但使用<code>less</code>可以更方便随意浏览文件，<code>less</code>在查看之前不会加载整个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># ps -ef | less #ps查看进程信息并通过less分页显示</span></div></pre></td></tr></table></figure>
+<h4 id="快捷键操作-2"><a href="#快捷键操作-2" class="headerlink" title="快捷键操作"></a>快捷键操作</h4><ul>
+<li>下一页<ul>
+<li>空格键</li>
+</ul>
+</li>
+<li>上一页<ul>
+<li>B键</li>
+</ul>
+</li>
+<li>下一行<ul>
+<li>回车键</li>
+<li>方向键下</li>
+</ul>
+</li>
+<li>上一行<ul>
+<li>方向键上</li>
+</ul>
+</li>
+<li>退出<ul>
+<li>Q键</li>
+</ul>
+</li>
+</ul>
+<h4 id="搜索-1"><a href="#搜索-1" class="headerlink" title="搜索"></a>搜索</h4><p>输入<code>/bala</code>向下搜索字符串<code>bala</code>，输入<code>?bala</code>向上搜索字符串<code>bala</code>。<br><code>N键</code>继续关键字的下一个搜索，<code>N键</code>反向搜索关键字。</p>
+<h3 id="head命令"><a href="#head命令" class="headerlink" title="head命令"></a>head命令</h3><p>在标准输出上显示每个FILE的起始10行。如果多于一个FILE，则一个接一个地显示，并且在每个文件显示的首部给出文件名。如果没有FILE或者FILE为-，那么就从标准输入上读取</p>
+<p><code>-c, --bytes=[-]K</code> 显示起始的SIZE字节。<code>b</code>表示512, <code>kB</code>表示1000, <code>K</code>表示1024, <code>MB</code>表示1000<em>1000, <code>M</code>表示1024</em>1024, <code>GB</code>表示1000<em>1000</em>1000, <code>G</code>表示1024<em>1024</em>1024</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># head --bytes=1k install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># head -c 1k install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># head -c 1m install.log</span></div></pre></td></tr></table></figure>
+<p><code>-n, --lines=[-]K</code> 显示起始的NUMBER行，而非默认的起始10行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># head -n 2 install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># head --lines 2 install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># head --lines=2 install.log</span></div></pre></td></tr></table></figure>
+<p><code>-q, --quiet, --silent</code> 当输出多个文件的时候才会显示出差异，不输出文件名的首部</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># head install.log install.log.syslog -n 2</span></div><div class="line">==&gt; install.log &lt;==  <span class="comment">#输出了文件的名字</span></div><div class="line">Installing libgcc-4.4.7-11.el6.x86_64</div><div class="line">warning: libgcc-4.4.7-11.el6.x86_64: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY</div><div class="line"></div><div class="line">==&gt; install.log.syslog &lt;==  <span class="comment">#输出了文件的名字</span></div><div class="line">&lt;86&gt;Dec 28 06:01:22 groupadd[1541]: group added to /etc/group: name=dbus, GID=81</div><div class="line">&lt;86&gt;Dec 28 06:01:22 groupadd[1541]: group added to /etc/gshadow: name=dbus</div><div class="line">[root@linux1 ~]<span class="comment">#</span></div><div class="line">[root@linux1 ~]<span class="comment"># head install.log install.log.syslog -q -n 2  #没有输出文件的名字</span></div><div class="line">Installing libgcc-4.4.7-11.el6.x86_64</div><div class="line">warning: libgcc-4.4.7-11.el6.x86_64: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY</div><div class="line">&lt;86&gt;Dec 28 06:01:22 groupadd[1541]: group added to /etc/group: name=dbus, GID=81</div><div class="line">&lt;86&gt;Dec 28 06:01:22 groupadd[1541]: group added to /etc/gshadow: name=dbus</div></pre></td></tr></table></figure>
+<h3 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a>tail命令</h3><p>在标准输出上显示每个FILE的最后10行。如果多于一个FILE，会一个接一个地显示，并在每个文件显示的首部给出文件名。如果没有FILE，或者FILE是-，那么就从标准输入上读取</p>
+<p><code>-c, --bytes=[-]K</code> 显示最后的SIZE字节。<code>b</code>表示512, <code>kB</code>表示1000, <code>K</code>表示1024, <code>MB</code>表示1000<em>1000, <code>M</code>表示1024</em>1024, <code>GB</code>表示1000<em>1000</em>1000, <code>G</code>表示1024<em>1024</em>1024</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># tail --bytes=1k install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># tail -c 1k install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># tail -c 1m install.log</span></div></pre></td></tr></table></figure>
+<p><code>-n, --lines=[-]K</code> 显示最后的NUMBER行，而非默认的最后10行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># tail -n 2 install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># tail --lines 2 install.log</span></div><div class="line">[root@linux1 ~]<span class="comment"># tail --lines=2 install.log</span></div></pre></td></tr></table></figure>
+<p><code>-f, --follow[={name|descriptor}]</code> 当文件增长时，输出后续添加的数据；<code>-f, --follow</code>以及<code>--follow=descriptor</code>都是相同的意思。常用于查看日志文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># tail -f install.log</span></div></pre></td></tr></table></figure>
+<p><code>--retry</code> 即使<code>tail</code>开始时就不能访问或者在<code>tail</code>运行后不能访问，也仍然不停地尝试打开文件。<code>--</code>只与<code>-f</code>合用时有用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># tail -f --retry kawaii.log</span></div><div class="line">tail: warning: --retry only effective <span class="keyword">for</span> the initial open</div><div class="line">tail: cannot open ‘logs/kawaii.log’ <span class="keyword">for</span> reading: No such file or directory</div><div class="line">tail: ‘logs/kawaii.log’ has appeared;  following end of new file</div><div class="line">2016-03-02 20:45:58,525 [pool-2-thread-1] INFO bala</div></pre></td></tr></table></figure>
+<p><code>-q, --quiet, --silent</code> 当输出多个文件的时候才会显示出差异，不输出文件名的首部</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[root@linux1 ~]<span class="comment"># tail install.log install.log.syslog -n 2</span></div><div class="line">==&gt; install.log &lt;==  <span class="comment">#输出了文件的名字</span></div><div class="line">Installing compat-libstdc++-296-2.96-144.el6.i686</div><div class="line">*** FINISHED INSTALLING PACKAGES ***</div><div class="line">==&gt; install.log.syslog &lt;==  <span class="comment">#输出了文件的名字</span></div><div class="line">&lt;86&gt;Dec 28 06:10:27 groupadd[4346]: group added to /etc/gshadow: name=slocate</div><div class="line">&lt;86&gt;Dec 28 06:10:27 groupadd[4346]: new group: name=slocate, GID=21</div><div class="line">[root@linux1 ~]<span class="comment">#</span></div><div class="line">[root@linux1 ~]<span class="comment"># tail install.log install.log.syslog -q -n 2  #没有输出文件的名字</span></div><div class="line">Installing compat-libstdc++-296-2.96-144.el6.i686</div><div class="line">*** FINISHED INSTALLING PACKAGES ***&lt;86&gt;Dec 28 06:10:27 groupadd[4346]: group added to /etc/gshadow: name=slocate</div><div class="line">&lt;86&gt;Dec 28 06:10:27 groupadd[4346]: new group: name=slocate, GID=21</div></pre></td></tr></table></figure>
+<h3 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h3><p><code>cp</code>复制文件（或者目录等）。可以使用这个命令复制一个文件到一个指定的目的地，或者复制任意多个文件到一个目的目录目录</p>
+<p>如果最后一个命令参数为一个已经存在的目录名，<code>cp</code>会将每一个源文件复制到那个目录下（维持原文件名）。如果所给的参数只有两个文件名，它把前一个文件复制到后一个文件上。如果最后一个参数不是文件名、目录名和给出多于两个非选项参数，这是错误的语法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@linux1 Desktop]<span class="comment"># ll</span></div><div class="line">total 4</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:27 test.txt</div><div class="line">[root@linux1 Desktop]<span class="comment"># cp test.txt test2.txt</span></div><div class="line">[root@linux1 Desktop]<span class="comment"># ll</span></div><div class="line">total 8</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:28 <span class="built_in">test</span>2.txt</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:27 test.txt</div></pre></td></tr></table></figure>
+<p><code>-p</code> 保留原文件的所有者、组、权限（包括<code>setuid</code>和<code>setgid</code>位），上次修改时间和上次访问时间。如果制作所有者或组信息的副本时出错，则<code>setuid</code>和<code>setgid</code>位被清空。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@linux1 Desktop]<span class="comment"># cp test.txt test3.txt -p</span></div><div class="line">[root@linux1 Desktop]<span class="comment"># ll</span></div><div class="line">total 12</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:28 <span class="built_in">test</span>2.txt</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:27 <span class="built_in">test</span>3.txt</div><div class="line">-rw-r--r--. 1 root root 9 Mar  2 21:27 test.txt</div></pre></td></tr></table></figure>
+<p><code>-i</code> 提示是否覆盖已经存在的目标文件。在<code>ReadHat linux</code>系统里，<code>cp</code>命令默认添加了<code>-i</code>选项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 Desktop]<span class="comment"># alias cp</span></div><div class="line"><span class="built_in">alias</span> cp=<span class="string">'cp -i'</span></div></pre></td></tr></table></figure>
+<p><code>-R, -r</code> 递归复制目录</p>
+<p><code>-v, --verbose</code> 在复制前印出文件名</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@linux1 Desktop]<span class="comment"># cp test.txt test3.txt -v</span></div><div class="line">cp: overwrite `<span class="built_in">test</span>3.txt<span class="string">'? y</span></div><div class="line">`test.txt' -&gt; `<span class="built_in">test</span>3.txt<span class="string">'</span></div></pre></td></tr></table></figure>
+<p><code>-n</code> 不覆盖已经存在的目标文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@linux1 Desktop]<span class="comment"># cp test.txt test3.txt -v -n</span></div><div class="line">[root@linux1 Desktop]<span class="comment">#</span></div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/linux-修改hostname/" rel="next" title="linux 修改hostname">
+                <i class="fa fa-chevron-left"></i> linux 修改hostname
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/ssh-keygen-密钥/" rel="prev" title="ssh-keygen 密钥">
+                ssh-keygen 密钥 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/linux-常用命令/"
+           data-title="linux 常用命令" data-url="http://myoss.github.io/2016/linux-常用命令/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/6986459?v=3&s=460"
+               alt="Jerry" />
+          <p class="site-author-name" itemprop="name">Jerry</p>
+          <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/myoss" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jerry.chen" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.oschina.net/ayao/blog" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  OSChina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/ayao8" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Sina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/2016/Git操作" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Git操作
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://myoss.github.io/git-guide/index.zh.html" target="_blank">Git Guide</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#开关机"><span class="nav-number">1.</span> <span class="nav-text">开关机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开机模式切换"><span class="nav-number">2.</span> <span class="nav-text">开机模式切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell命令"><span class="nav-number">3.</span> <span class="nav-text">shell命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户家目录"><span class="nav-number">4.</span> <span class="nav-text">用户家目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#su命令"><span class="nav-number">5.</span> <span class="nav-text">su命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#id命令"><span class="nav-number">6.</span> <span class="nav-text">id命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uname命令"><span class="nav-number">7.</span> <span class="nav-text">uname命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date命令"><span class="nav-number">8.</span> <span class="nav-text">date命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续执行多条命令"><span class="nav-number">9.</span> <span class="nav-text">连续执行多条命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#man命令操作手册"><span class="nav-number">10.</span> <span class="nav-text">man命令操作手册</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快捷键操作"><span class="nav-number">10.1.</span> <span class="nav-text">快捷键操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索"><span class="nav-number">10.2.</span> <span class="nav-text">搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#退出man"><span class="nav-number">10.3.</span> <span class="nav-text">退出man</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stat命令"><span class="nav-number">11.</span> <span class="nav-text">stat命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more命令"><span class="nav-number">12.</span> <span class="nav-text">more命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快捷键操作-1"><span class="nav-number">12.1.</span> <span class="nav-text">快捷键操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less命令"><span class="nav-number">13.</span> <span class="nav-text">less命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快捷键操作-2"><span class="nav-number">13.1.</span> <span class="nav-text">快捷键操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索-1"><span class="nav-number">13.2.</span> <span class="nav-text">搜索</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head命令"><span class="nav-number">14.</span> <span class="nav-text">head命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail命令"><span class="nav-number">15.</span> <span class="nav-text">tail命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp命令"><span class="nav-number">16.</span> <span class="nav-text">cp命令</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div style="display: inline-block; margin-left: 10px;">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span style="margin-right: 10px;">|</span>
+  <span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv" style="color: #555;"></span>&nbsp;次</span>
+  <span style="margin-right: 10px; margin-left: 10px;">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数&nbsp;<span id="busuanzi_value_site_uv" style="color: #555;"></span>&nbsp;人次
+</span>
+</div>
+<div>
+  <script async type="text/javascript" src="http://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500002217"></script>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"myoss"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      <script src="//cdn.bootcss.com/UAParser.js/0.7.9/ua-parser.min.js"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("UkL0nPhjdELnTDIQSpNgWpUc-gzGzoHsz", "HlYcuUYr5IlDSbtWWpWLG5VP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  <a href="https://github.com/myoss" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+</body>
+</html>

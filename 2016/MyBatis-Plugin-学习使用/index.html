@@ -1,0 +1,859 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="开发配置," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jerry's Blog - 碎碎念" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="关于本教程以下教程仅供学习使用，针对于IntelliJ Idea 15（目前已经支持IntelliJ Idea 2016）中的Mybatis Plugin插件（https://plugins.jetbrains.com/plugin/7293?pr=idea），后续作者会抽业余时间更新
+如果你觉得本项目能帮助到你，那就Fork一下吧项目地址：https://github.com/myoss/pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis Plugin 学习使用">
+<meta property="og:url" content="http://myoss.github.io/2016/MyBatis-Plugin-学习使用/index.html">
+<meta property="og:site_name" content="Jerry's Blog - 碎碎念">
+<meta property="og:description" content="关于本教程以下教程仅供学习使用，针对于IntelliJ Idea 15（目前已经支持IntelliJ Idea 2016）中的Mybatis Plugin插件（https://plugins.jetbrains.com/plugin/7293?pr=idea），后续作者会抽业余时间更新
+如果你觉得本项目能帮助到你，那就Fork一下吧项目地址：https://github.com/myoss/pro">
+<meta property="og:image" content="http://myoss.github.io/2016/MyBatis-Plugin-学习使用/fork_profile.png">
+<meta property="og:image" content="http://myoss.github.io/2016/MyBatis-Plugin-学习使用/replace_class.png">
+<meta property="og:updated_time" content="2017-02-12T09:53:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis Plugin 学习使用">
+<meta name="twitter:description" content="关于本教程以下教程仅供学习使用，针对于IntelliJ Idea 15（目前已经支持IntelliJ Idea 2016）中的Mybatis Plugin插件（https://plugins.jetbrains.com/plugin/7293?pr=idea），后续作者会抽业余时间更新
+如果你觉得本项目能帮助到你，那就Fork一下吧项目地址：https://github.com/myoss/pro">
+<meta name="twitter:image" content="http://myoss.github.io/2016/MyBatis-Plugin-学习使用/fork_profile.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6241375170854913000,
+      author: '博主-Jerry'
+    }
+  };
+</script>
+
+  <title> MyBatis Plugin 学习使用 | Jerry's Blog - 碎碎念 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-72820115-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0aed29b605b5125ea269404f8191671f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=500002217";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jerry's Blog - 碎碎念</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">我想就这样牵着 你的手不放开</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MyBatis Plugin 学习使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-19T11:15:00+08:00" content="2016-02-19">
+              2016-02-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/IntelliJ-Idea/" itemprop="url" rel="index">
+                    <span itemprop="name">IntelliJ Idea</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/MyBatis-Plugin-学习使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/MyBatis-Plugin-学习使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/MyBatis-Plugin-学习使用/" class="leancloud_visitors" data-flag-title="MyBatis Plugin 学习使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="关于本教程"><a href="#关于本教程" class="headerlink" title="关于本教程"></a>关于本教程</h2><p>以下教程仅供学习使用，针对于<code>IntelliJ Idea 15</code>（目前已经支持<code>IntelliJ Idea 2016</code>）中的<code>Mybatis Plugin</code>插件（<a href="https://plugins.jetbrains.com/plugin/7293?pr=idea" target="_blank" rel="external">https://plugins.jetbrains.com/plugin/7293?pr=idea</a>），后续作者会抽业余时间更新</p>
+<h2 id="如果你觉得本项目能帮助到你，那就Fork一下吧"><a href="#如果你觉得本项目能帮助到你，那就Fork一下吧" class="headerlink" title="如果你觉得本项目能帮助到你，那就Fork一下吧"></a>如果你觉得本项目能帮助到你，那就<code>Fork</code>一下吧</h2><p>项目地址：<a href="https://github.com/myoss/profile" target="_blank" rel="external">https://github.com/myoss/profile</a></p>
+<p><img src="/2016/MyBatis-Plugin-学习使用/fork_profile.png" alt="fork_profile.png" title=""></p>
+
+
+
+<h2 id="下载插件"><a href="#下载插件" class="headerlink" title="下载插件"></a>下载插件</h2><p>前提你已经在<code>IntelliJ Idea</code>中安装好了<code>Mybatis Plugin</code>，并且重启过了<code>IntelliJ Idea</code>。</p>
+<p>下载<code>profile</code>项目（项目地址：<a href="https://github.com/myoss/profile" target="_blank" rel="external">https://github.com/myoss/profile</a>）之后，找到目录：<code>profile\idea\plugin\MybatisPlugin</code>，并选择<code>IntelliJ Idea</code>中安装<code>Mybatis Plugin</code>的版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> git@github.com:myoss/profile.git</div></pre></td></tr></table></figure>
+<h2 id="windows系统"><a href="#windows系统" class="headerlink" title="windows系统"></a>windows系统</h2><h3 id="查找Idea插件配置目录"><a href="#查找Idea插件配置目录" class="headerlink" title="查找Idea插件配置目录"></a>查找Idea插件配置目录</h3><p><code>IntelliJ Idea</code>安装<code>Mybatis Plugin</code>之后，默认保存的位置如下，前提你没有更改过<code>IntelliJ Idea</code>配置目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\你的账户目录\.IntelliJIdea15\config\plugins\mybatis_plus\lib</div></pre></td></tr></table></figure>
+<h3 id="替换class文件"><a href="#替换class文件" class="headerlink" title="替换class文件"></a>替换class文件</h3><p>用<code>WinRAR</code>打开<code>mybatis_plus.jar</code>，将目录<code>profile\idea\plugin\MybatisPlugin\对应的版本号\</code>下的<code>com</code>文件夹拖进<code>WinRAR</code>，根据提示覆盖即可</p>
+<p><img src="/2016/MyBatis-Plugin-学习使用/replace_class.png" alt="replace_class.png" title=""></p>
+
+
+<h3 id="重启IntelliJ-Idea"><a href="#重启IntelliJ-Idea" class="headerlink" title="重启IntelliJ Idea"></a>重启IntelliJ Idea</h3><p>就这样完成了，教程完毕</p>
+<h2 id="mac-os系统"><a href="#mac-os系统" class="headerlink" title="mac os系统"></a>mac os系统</h2><p>由于<code>mac os</code>中<code>IntelliJ Idea</code>的配置文件目录不一致，所以配置起来有些不一样。linux系统中应该类似，我没有验证，如果有兄弟验证过还请告诉我，感谢</p>
+<h3 id="查找Idea插件配置目录-1"><a href="#查找Idea插件配置目录-1" class="headerlink" title="查找Idea插件配置目录"></a>查找Idea插件配置目录</h3><p>使用<code>find</code>命令在你的用户目录下查找<code>mybatis_plus.jar</code>这个文件（前提你没有更改过<code>IntelliJ Idea</code>的配置目录，如果更改了从根目录下查找吧，花费的时间可能会多点）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">JerryMac:~ jerry-osx-m$ find ~ -name <span class="string">"mybatis_plus.jar"</span></div><div class="line">/Users/jerry-osx-m/Library/Application Support/IntelliJIdea15/mybatis_plus/lib/mybatis_plus.jar</div><div class="line"></div><div class="line">Jerrys-OS-X:~ Jerry$ find ~ -name <span class="string">"mybatis_plus.jar"</span></div><div class="line">/Users/Jerry/Library/Application Support/IntelliJIdea2016.1/mybatis_plus/lib/mybatis_plus.jar</div></pre></td></tr></table></figure>
+<h3 id="替换class文件-1"><a href="#替换class文件-1" class="headerlink" title="替换class文件"></a>替换class文件</h3><p>方法1，在windows系统中将<code>mybatis_plus.jar</code>包替换好，然后替换掉<code>mac</code>的<code>mybatis_plus.jar</code>即可。</p>
+<p>方法2，在<code>mac 终端</code>中，使用以下命令进行替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">JerryChen-MacBook-Pro:lib jerry$ pwd</div><div class="line">/Users/jerry/Library/Application Support/IntelliJIdea2016.3/mybatis_plus/lib</div><div class="line">JerryChen-MacBook-Pro:lib jerry$ ls</div><div class="line">mybatis-generator-core-1.3.2.jar    mybatis_plus.jar            ref.idea.common-1.0.jar</div><div class="line"></div><div class="line"># 将要使用版本的 com 文件复制到当前目录中</div><div class="line">JerryChen-MacBook-Pro:lib jerry$ cp -R ~/workspaces/github/profile/idea/plugin/MybatisPlugin/v2.7~v2.87/ .</div><div class="line">JerryChen-MacBook-Pro:lib jerry$ ls</div><div class="line">com                 mybatis_plus.jar</div><div class="line">mybatis-generator-core-1.3.2.jar    ref.idea.common-1.0.jar</div><div class="line"></div><div class="line"># 使用 jar 命令进行替换，注意 com 文件夹一定要当前目录下面</div><div class="line">JerryChen-MacBook-Pro:lib jerry$ jar uvf mybatis_plus.jar com</div><div class="line">正在添加: com/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/dom/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/dom/model/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/license/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/license/ActivationDriver$1.class(输入 = 1926) (输出 = 797)(压缩了 58%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/license/ActivationDriver.class(输入 = 1398) (输出 = 656)(压缩了 53%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/RefProject$1.class(输入 = 2224) (输出 = 1092)(压缩了 50%)</div><div class="line">正在添加: com/seventh7/mybatis/ref/RefProject.class(输入 = 1982) (输出 = 919)(压缩了 53%)</div><div class="line">正在添加: com/seventh7/mybatis/service/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/service/JavaService$1.class(输入 = 1408) (输出 = 613)(压缩了 56%)</div><div class="line">正在添加: com/seventh7/mybatis/service/JavaService$2.class(输入 = 1312) (输出 = 575)(压缩了 56%)</div><div class="line">正在添加: com/seventh7/mybatis/service/JavaService.class(输入 = 10921) (输出 = 4166)(压缩了 61%)</div><div class="line">正在添加: com/seventh7/mybatis/util/(输入 = 0) (输出 = 0)(存储了 0%)</div><div class="line">正在添加: com/seventh7/mybatis/util/JavaUtils$SystemData.class(输入 = 3412) (输出 = 1602)(压缩了 53%)</div><div class="line">正在添加: com/seventh7/mybatis/util/JavaUtils.class(输入 = 13339) (输出 = 4773)(压缩了 64%)</div><div class="line">正在添加: com/seventh7/mybatis/dom/model/Completion.class(输入 = 1663) (输出 = 923)(压缩了 44%)</div></pre></td></tr></table></figure>
+<p>方法3，参考网友在<code>mac</code>中使用<code>类似 WinRar 软件</code>进行替换：<a href="https://beamaster.github.io/2017/01/03/IDEA-for-Mybatis-%E7%A0%B4%E8%A7%A3%E4%B9%8B%E9%81%93/" target="_blank" rel="external">点击我跳转</a></p>
+<h3 id="重启IntelliJ-Idea-1"><a href="#重启IntelliJ-Idea-1" class="headerlink" title="重启IntelliJ Idea"></a>重启IntelliJ Idea</h3><p>就这样完成了，教程完毕</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发配置/" rel="tag">#开发配置</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/常用的-JavaScript-库-CDN-加速服务/" rel="next" title="常用的 JavaScript 库 CDN 加速服务">
+                <i class="fa fa-chevron-left"></i> 常用的 JavaScript 库 CDN 加速服务
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/linux-mount-umount-挂载-卸载ISO镜像/" rel="prev" title="linux mount/umount 挂载/卸载ISO镜像">
+                linux mount/umount 挂载/卸载ISO镜像 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/MyBatis-Plugin-学习使用/"
+           data-title="MyBatis Plugin 学习使用" data-url="http://myoss.github.io/2016/MyBatis-Plugin-学习使用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/6986459?v=3&s=460"
+               alt="Jerry" />
+          <p class="site-author-name" itemprop="name">Jerry</p>
+          <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/myoss" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jerry.chen" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.oschina.net/ayao/blog" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  OSChina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/ayao8" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Sina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/2016/Git操作" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Git操作
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://myoss.github.io/git-guide/index.zh.html" target="_blank">Git Guide</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于本教程"><span class="nav-number">1.</span> <span class="nav-text">关于本教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果你觉得本项目能帮助到你，那就Fork一下吧"><span class="nav-number">2.</span> <span class="nav-text">如果你觉得本项目能帮助到你，那就Fork一下吧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载插件"><span class="nav-number">3.</span> <span class="nav-text">下载插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows系统"><span class="nav-number">4.</span> <span class="nav-text">windows系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找Idea插件配置目录"><span class="nav-number">4.1.</span> <span class="nav-text">查找Idea插件配置目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替换class文件"><span class="nav-number">4.2.</span> <span class="nav-text">替换class文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启IntelliJ-Idea"><span class="nav-number">4.3.</span> <span class="nav-text">重启IntelliJ Idea</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac-os系统"><span class="nav-number">5.</span> <span class="nav-text">mac os系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查找Idea插件配置目录-1"><span class="nav-number">5.1.</span> <span class="nav-text">查找Idea插件配置目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替换class文件-1"><span class="nav-number">5.2.</span> <span class="nav-text">替换class文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启IntelliJ-Idea-1"><span class="nav-number">5.3.</span> <span class="nav-text">重启IntelliJ Idea</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div style="display: inline-block; margin-left: 10px;">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span style="margin-right: 10px;">|</span>
+  <span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv" style="color: #555;"></span>&nbsp;次</span>
+  <span style="margin-right: 10px; margin-left: 10px;">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数&nbsp;<span id="busuanzi_value_site_uv" style="color: #555;"></span>&nbsp;人次
+</span>
+</div>
+<div>
+  <script async type="text/javascript" src="http://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500002217"></script>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"myoss"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      <script src="//cdn.bootcss.com/UAParser.js/0.7.9/ua-parser.min.js"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("UkL0nPhjdELnTDIQSpNgWpUc-gzGzoHsz", "HlYcuUYr5IlDSbtWWpWLG5VP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  <a href="https://github.com/myoss" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+</body>
+</html>

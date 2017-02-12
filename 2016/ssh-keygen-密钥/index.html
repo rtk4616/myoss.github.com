@@ -1,0 +1,890 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="开发配置,linux," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jerry's Blog - 碎碎念" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="ssh-keygen 使用生成、管理和转换认证密钥
+1234567891011121314151617181920212223242526$ ssh-keygen --helpssh-keygen: unknown option -- -usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | rsa1]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssh-keygen 密钥">
+<meta property="og:url" content="http://myoss.github.io/2016/ssh-keygen-密钥/index.html">
+<meta property="og:site_name" content="Jerry's Blog - 碎碎念">
+<meta property="og:description" content="ssh-keygen 使用生成、管理和转换认证密钥
+1234567891011121314151617181920212223242526$ ssh-keygen --helpssh-keygen: unknown option -- -usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | rsa1]">
+<meta property="og:updated_time" content="2017-02-12T09:53:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ssh-keygen 密钥">
+<meta name="twitter:description" content="ssh-keygen 使用生成、管理和转换认证密钥
+1234567891011121314151617181920212223242526$ ssh-keygen --helpssh-keygen: unknown option -- -usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | rsa1]">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6241375170854913000,
+      author: '博主-Jerry'
+    }
+  };
+</script>
+
+  <title> ssh-keygen 密钥 | Jerry's Blog - 碎碎念 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-72820115-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0aed29b605b5125ea269404f8191671f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=500002217";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jerry's Blog - 碎碎念</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">我想就这样牵着 你的手不放开</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ssh-keygen 密钥
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-05T15:20:00+08:00" content="2016-03-05">
+              2016-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/ssh/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/ssh-keygen-密钥/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/ssh-keygen-密钥/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/ssh-keygen-密钥/" class="leancloud_visitors" data-flag-title="ssh-keygen 密钥">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="ssh-keygen-使用"><a href="#ssh-keygen-使用" class="headerlink" title="ssh-keygen 使用"></a>ssh-keygen 使用</h3><p>生成、管理和转换认证密钥</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen --help</div><div class="line">ssh-keygen: unknown option -- -</div><div class="line">usage: ssh-keygen [-q] [-b bits] [-t dsa | ecdsa | ed25519 | rsa | rsa1]</div><div class="line">                  [-N new_passphrase] [-C comment] [<span class="_">-f</span> output_keyfile]</div><div class="line">       ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [<span class="_">-f</span> keyfile]</div><div class="line">       ssh-keygen -i [-m key_format] [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen <span class="_">-e</span> [-m key_format] [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen -y [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen -c [-P passphrase] [-C comment] [<span class="_">-f</span> keyfile]</div><div class="line">       ssh-keygen <span class="_">-l</span> [-v] [-E fingerprint_hash] [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen -B [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen -D pkcs11</div><div class="line">       ssh-keygen -F hostname [<span class="_">-f</span> known_hosts_file] [<span class="_">-l</span>]</div><div class="line">       ssh-keygen -H [<span class="_">-f</span> known_hosts_file]</div><div class="line">       ssh-keygen -R hostname [<span class="_">-f</span> known_hosts_file]</div><div class="line">       ssh-keygen -r hostname [<span class="_">-f</span> input_keyfile] [-g]</div><div class="line">       ssh-keygen -G output_file [-v] [-b bits] [-M memory] [-S start_point]</div><div class="line">       ssh-keygen -T output_file <span class="_">-f</span> input_file [-v] [<span class="_">-a</span> rounds] [-J num_lines]</div><div class="line">                  [-j start_line] [-K checkpt] [-W generator]</div><div class="line">       ssh-keygen <span class="_">-s</span> ca_key -I certificate_identity [-h] [-n principals]</div><div class="line">                  [-O option] [-V validity_interval] [-z serial_number] file ...</div><div class="line">       ssh-keygen -L [<span class="_">-f</span> input_keyfile]</div><div class="line">       ssh-keygen -A</div><div class="line">       ssh-keygen -k <span class="_">-f</span> krl_file [-u] [<span class="_">-s</span> ca_public] [-z version_number]</div><div class="line">                  file ...</div><div class="line">       ssh-keygen -Q <span class="_">-f</span> krl_file file ...</div></pre></td></tr></table></figure>
+<p><code>-t</code> 指定要创建的密钥类型，如：<code>-t dsa | ecdsa | ed25519 | rsa | rsa1</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t ecdsa</div><div class="line">Generating public/private ecdsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/Administrator/.ssh/id_ecdsa):</div></pre></td></tr></table></figure>
+<p><code>-b</code> <em>bits</em>  指定密钥长度。对于RSA密钥，最小要求768位，默认是2048位</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -b 4096</div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/Administrator/.ssh/id_rsa):</div></pre></td></tr></table></figure>
+<p><code>-C</code> <em>comment</em>  提供一个注释。生成<code>git</code>密钥的时候都会要求注释中写入邮箱名字。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t rsa -b 4096 -C <span class="string">"your_email@example.com"</span></div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/Administrator/.ssh/id_rsa): your_email <span class="comment">#如果需要指定生成的文件名，就输入，否则就回车</span></div><div class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase):</div><div class="line">Enter same passphrase again:</div><div class="line">Your identification has been saved <span class="keyword">in</span> jerry.myoss.</div><div class="line">Your public key has been saved <span class="keyword">in</span> jerry.myoss.pub.</div><div class="line">The key fingerprint is:</div><div class="line">SHA256:zIF+Fqb8qIJsHq1nBV07DTuOvF6ucxhaaIBZcIk2/uE jerry.myoss@gmail.com</div><div class="line">The key<span class="string">'s randomart image is:</span></div><div class="line">+---[RSA 4096]----+</div><div class="line">|.o..             |</div><div class="line">|.+o    +         |</div><div class="line">|+o. . o O        |</div><div class="line">|oo o + X +       |</div><div class="line">|  + = * S        |</div><div class="line">|  .E * *         |</div><div class="line">|.o..+ =..        |</div><div class="line">|.o++ =o.         |</div><div class="line">|ooo.oo+.         |</div><div class="line">+----[SHA256]-----+</div></pre></td></tr></table></figure>
+<p><code>-f</code> <em>filename</em> 指定密钥文件名</p>
+<p><code>-l</code>  显示公钥文件的指纹数据。它也支持 RSA1 的私钥。对于RSA和DSA密钥，将会寻找对应的公钥文件，然后显示其指纹数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -lf id_rsa.pub</div><div class="line">2048 SHA256:Ie1oJx+a9+iqZk1OUnUrJVH2e/aRFbGcfLvpG7YNJBY your_email@example.com (RSA)</div></pre></td></tr></table></figure>
+<p><code>-E</code> 用md5的方式查看指纹数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -E md5 -lf id_rsa.pub</div><div class="line">2048 MD5:8a:f4:c3:8f:11:53:c9:12:a6:c0:3f:b9:70:a6:84:65 your_email@example.com (RSA)</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="ssh密钥常见问题"><a href="#ssh密钥常见问题" class="headerlink" title="ssh密钥常见问题"></a>ssh密钥常见问题</h3><h4 id="Permissions-0644-for-‘-root-ssh-id-rsa’-are-too-open"><a href="#Permissions-0644-for-‘-root-ssh-id-rsa’-are-too-open" class="headerlink" title="Permissions 0644 for ‘/root/.ssh/id_rsa’ are too open"></a>Permissions 0644 for ‘/root/.ssh/id_rsa’ are too open</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@linux1 workspace]<span class="comment"># git clone git@github.com:myoss/profile.git</span></div><div class="line">Initialized empty Git repository <span class="keyword">in</span> /root/workspace/profile/.git/</div><div class="line">The authenticity of host <span class="string">'github.com (192.30.252.128)'</span> can<span class="string">'t be established.</span></div><div class="line">RSA key fingerprint is 16:27:ac:b5:76:28:2d:37:63:1b:56:3d:sb:df:a6:68.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added 'github.com,192.30.252.128<span class="string">' (RSA) to the list of known hosts.</span></div><div class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</div><div class="line">@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @</div><div class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</div><div class="line">Permissions 0644 for '/root/.ssh/id_rsa<span class="string">' are too open.</span></div><div class="line">It is required that your private key files are NOT accessible by others.</div><div class="line">This private key will be ignored.</div><div class="line">bad permissions: ignore key: /root/.ssh/id_rsa</div><div class="line">Permission denied (publickey).</div><div class="line">fatal: The remote end hung up unexpectedly</div></pre></td></tr></table></figure>
+<p>出现以上的错误，需要将私钥的权限降级到<code>0600</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@linux1 workspace]<span class="comment"># chmod 0600 ~/.ssh/id_rsa</span></div></pre></td></tr></table></figure>
+<hr>
+<h3 id="多个公钥与服务器上不同的GIT帐号交互"><a href="#多个公钥与服务器上不同的GIT帐号交互" class="headerlink" title="多个公钥与服务器上不同的GIT帐号交互"></a>多个公钥与服务器上不同的GIT帐号交互</h3><p>国外很有名的：<code>github.com</code>，国内：<code>git.oschina.net</code>等等，我们可能会在上面注册多个账户，但是如何使用不同的公钥了？</p>
+<h4 id="生成不同账户的密钥"><a href="#生成不同账户的密钥" class="headerlink" title="生成不同账户的密钥"></a>生成不同账户的密钥</h4><p>假设我现在有2个<code>Github</code>账户，账户名分别是：<code>jerry1</code>和<code>jerry2</code>，我先在本地生成两个密钥，然后将密钥的公钥分别添加到<code>Github</code>账户中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ ssh-keygen -t rsa -b 4096 -C <span class="string">"jerry1@myoss.com"</span></div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/Administrator/.ssh/id_rsa): jerry1_rsa</div><div class="line"></div><div class="line">$ ssh-keygen -t rsa -b 4096 -C <span class="string">"jerry2@myoss.com"</span></div><div class="line">Generating public/private rsa key pair.</div><div class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/Administrator/.ssh/id_rsa): jerry2_rsa</div></pre></td></tr></table></figure>
+<h4 id="添加公钥到服务器的账户中"><a href="#添加公钥到服务器的账户中" class="headerlink" title="添加公钥到服务器的账户中"></a>添加公钥到服务器的账户中</h4><p>将刚才生成的两个公钥，分别添加到<code>github.com</code>中（其它的网站也类似）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cat jerry1_rsa.pub <span class="comment">#复制下面输出的内容，添加到github账户中</span></div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+vhrJRJZHJnLB/hu+4M1WJpWv+VICFUE1P/spsuPE6VZuCsTi/QfO5g9/ekxKgaw0vZs6F568UQbZQV+u3c88t0YWbp6VlvgsPPjJAUw96UkLswMJRmfkwPkZdmrwv5xjLW6eC3xrV0jnZfwzVJl0OHuBMLwfYCwrRjKo8n1dqiQWaAFI6STJpYwj9862o+Bob86h+CQl5CpKsSViyhnHcdrSC498fYptkd2CbaQ8IL0ShLdi/uJAHbVv1cGRyDe/pHpfg9/exJWr9E8zmBHJ1rVYNXWcSJQiaB8sJ2Gqx/Lr8sW3iDaavJEw3y3agx5XWyPG8FDh60g/VHR9PURlkpO28jl8whxiVZbCXUreRZZQy3VCMY+JP73lXsb6a8YJ00PsM5OdTDm1PRQCPUxq492PbysSNeS+k7/RiOSBp1CE1xuWGhvJiZdNAF8pcxxe4Hvbg06PvoDIiyPl6Q0w6N//MNIjiVAJlb8+4Lqdo/EG96QtR8hjGi5j2Pkf2UU6PcmH1Cgb28xNwKorris4JUfHoYq9d7hQBpFOraSzsgM/M7x9QRYLi/3Up8aSXSbbHNrLN4gbIlEjEyb+AjG2WXSAkFNYr6LSRXa3V6KTLttR9Cxqo85WOsdQpJYjeeZVocfWlUkHwl3pSh/x/8GAkAj1J+XenGoJvc+upL13xw== jerry1@myoss.com</div><div class="line"></div><div class="line">$ cat jerry2_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKn5jvaHbKnnZqDqDXpaos9CZZKWgdfYKK+oUWJ88hfjuD9GQOXcK23xedRQ8fXGGnuvNjjsKFHeJZOP70pSflQIladi6ZG2vNWtieDoWWfS65f8fEFd5kN7OS4GA9K7DHZkzr+IYm5tPjq9Znwvml2xN51BlJoqo0UUhPRKE+v7or3tqSS155LuEDyRBvHxA8TKeIK7TM80E2WDVaVzXvEFdgT5s3JrzmzVhgFjjJTS2dpER3DqSyhB168gMEE4Lhh+D+68vR6ED/7eFst0g7bBC5f8lAmAs7bWOFVKFkFTzOQj8nL4XM9ACZyCvgDMakLpOntQa/W9l4Av0FS5XFpMxm1Qza+SDycwIGYgAMDpiEiIzcuPiMFckGk8CV5C7ziV9oU+OZTYChskrnahaOJRZNvjGN/Y7kUIXjybgQUqwj25qxbmwXivT9OObKNtdT8lQZLdFPgBosT62aW0MpDKGg8JTGDG4IDfIXnOizz6PTT9s7XuIYFi23vsScFG/yttm7cUDsUKn9HI5bjv0u0YE7Q1oYYXZmq7ZdbJ5QgTjCY3OJhT+wZpiLdFdLFplj+OVT29PRVxB01njGqmuXrpij/AP9V3Hr2l7NM12xc597jOoDwBLHgxvt93jAzQTgsxalE0ZU73P/8ohnngWQiAi/vXe4oh8la7kj3gpe5Q== jerry2@myoss.com</div></pre></td></tr></table></figure>
+<h4 id="配置ssh的config文件"><a href="#配置ssh的config文件" class="headerlink" title="配置ssh的config文件"></a>配置ssh的config文件</h4><p>在用户家目录的<code>.ssh</code>中，创建或者编辑文件<code>config</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ cat ~/.ssh/config</div><div class="line">Host jerry1-github</div><div class="line">HostName github.com</div><div class="line">user git</div><div class="line">PreferredAuthentications publickey</div><div class="line">IdentityFile ~/.ssh/jerry1_rsa</div><div class="line"></div><div class="line">Host jerry2-github</div><div class="line">HostName github.com</div><div class="line">user git</div><div class="line">PreferredAuthentications publickey</div><div class="line">IdentityFile ~/.ssh/jerry2_rsa</div></pre></td></tr></table></figure>
+<h4 id="测试是否能连接git服务器"><a href="#测试是否能连接git服务器" class="headerlink" title="测试是否能连接git服务器"></a>测试是否能连接git服务器</h4><p>不输出错误信息，即连接成功。如果不是<code>github</code>账户，输出的信息和下面会不同</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ssh -T jerry1-github</div><div class="line">Hi jerry1! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></div><div class="line"></div><div class="line">$ ssh -T jerry2-github</div><div class="line">Hi jerry2! You've successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure>
+<h4 id="git服务器的仓库地址"><a href="#git服务器的仓库地址" class="headerlink" title="git服务器的仓库地址"></a>git服务器的仓库地址</h4><p><code>github</code>中默认ssh方式的项目地址类似如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git@github.com:github的用户名/github的项目名字.git</div><div class="line"></div><div class="line">git@github.com:myoss/profile.git <span class="comment">#比如：这是我的账户中的profile项目</span></div></pre></td></tr></table></figure>
+<p>这是时候克隆的ssh地址需要稍作改变</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">config文件中配置的Host名字:github的用户名/github的项目名字.git</div><div class="line"></div><div class="line">git <span class="built_in">clone</span> jerry1-github:jerry1/github的项目名字.git  <span class="comment">#GitHub中jerry1的某某项目</span></div><div class="line"></div><div class="line">git <span class="built_in">clone</span> jerry2-github:jerry2/github的项目名字.git  <span class="comment">#GitHub中jerry2的某某项目</span></div></pre></td></tr></table></figure>
+<p>如果你的项目已经克隆到本地磁盘了，那么就修改下远程仓库的地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git remote <span class="built_in">set</span>-url &lt;仓库的简写名字&gt; &lt;新的仓库地址&gt;</div><div class="line"></div><div class="line">git remote <span class="built_in">set</span>-url origin jerry1-github:jerry1/github的项目名字.git</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/开发配置/" rel="tag">#开发配置</a>
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/linux-常用命令/" rel="next" title="linux 常用命令">
+                <i class="fa fa-chevron-left"></i> linux 常用命令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/redis-简单配置和集群/" rel="prev" title="redis 简单配置和集群">
+                redis 简单配置和集群 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/ssh-keygen-密钥/"
+           data-title="ssh-keygen 密钥" data-url="http://myoss.github.io/2016/ssh-keygen-密钥/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/6986459?v=3&s=460"
+               alt="Jerry" />
+          <p class="site-author-name" itemprop="name">Jerry</p>
+          <p class="site-description motion-element" itemprop="description">好记性不如烂笔头</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/myoss" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jerry.chen" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://my.oschina.net/ayao/blog" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  OSChina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/ayao8" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Sina
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/2016/Git操作" target="_blank">
+                  
+                    <i class="fa fa-globe"></i>
+                  
+                  Git操作
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+            <div class="links-of-blogroll-title">Links</div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://myoss.github.io/git-guide/index.zh.html" target="_blank">Git Guide</a>
+                </li>
+              
+            </ul>
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh-keygen-使用"><span class="nav-number">1.</span> <span class="nav-text">ssh-keygen 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh密钥常见问题"><span class="nav-number">2.</span> <span class="nav-text">ssh密钥常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Permissions-0644-for-‘-root-ssh-id-rsa’-are-too-open"><span class="nav-number">2.1.</span> <span class="nav-text">Permissions 0644 for ‘/root/.ssh/id_rsa’ are too open</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个公钥与服务器上不同的GIT帐号交互"><span class="nav-number">3.</span> <span class="nav-text">多个公钥与服务器上不同的GIT帐号交互</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成不同账户的密钥"><span class="nav-number">3.1.</span> <span class="nav-text">生成不同账户的密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加公钥到服务器的账户中"><span class="nav-number">3.2.</span> <span class="nav-text">添加公钥到服务器的账户中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置ssh的config文件"><span class="nav-number">3.3.</span> <span class="nav-text">配置ssh的config文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试是否能连接git服务器"><span class="nav-number">3.4.</span> <span class="nav-text">测试是否能连接git服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git服务器的仓库地址"><span class="nav-number">3.5.</span> <span class="nav-text">git服务器的仓库地址</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+<div style="display: inline-block; margin-left: 10px;">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span style="margin-right: 10px;">|</span>
+  <span id="busuanzi_container_site_pv">本站总访问量&nbsp;<span id="busuanzi_value_site_pv" style="color: #555;"></span>&nbsp;次</span>
+  <span style="margin-right: 10px; margin-left: 10px;">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数&nbsp;<span id="busuanzi_value_site_uv" style="color: #555;"></span>&nbsp;人次
+</span>
+</div>
+<div>
+  <script async type="text/javascript" src="http://pingjs.qq.com/h5/stats.js" name="MTAH5" sid="500002217"></script>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery.lazyload/1.9.1/jquery.lazyload.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.2/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"myoss"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      <script src="//cdn.bootcss.com/UAParser.js/0.7.9/ua-parser.min.js"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("UkL0nPhjdELnTDIQSpNgWpUc-gzGzoHsz", "HlYcuUYr5IlDSbtWWpWLG5VP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  <a href="https://github.com/myoss" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+</body>
+</html>
