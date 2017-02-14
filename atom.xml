@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://myoss.github.io/"/>
-  <updated>2017-02-13T07:55:35.000Z</updated>
+  <updated>2017-02-14T13:31:58.000Z</updated>
   <id>http://myoss.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://myoss.github.io/2017/Mac%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-v1/"/>
     <id>http://myoss.github.io/2017/Mac开发环境搭建-v1/</id>
     <published>2017-02-12T10:29:00.000Z</published>
-    <updated>2017-02-13T07:55:35.000Z</updated>
+    <updated>2017-02-14T13:31:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>前言，不知从何时开始向往能在<code>Mac</code>下开发，如今终于实现，感谢老婆大人的支持。废话不多，开始记录从零开始搭建开发环境，主要是<code>Java</code>、<code>node</code>的配置</p>
 <h2 id="开启Mac三指拖拽的手势"><a href="#开启Mac三指拖拽的手势" class="headerlink" title="开启Mac三指拖拽的手势"></a>开启Mac三指拖拽的手势</h2><p>非常好用的功能，<code>macOS</code>系统中默认关闭了这个功能，参考百度经验的设置方法：<a href="http://jingyan.baidu.com/article/0bc808fc5bceb21bd485b98e.html" target="_blank" rel="external">点击跳转</a></p>
@@ -78,7 +78,16 @@
 <h2 id="安装iTerm2"><a href="#安装iTerm2" class="headerlink" title="安装iTerm2"></a>安装iTerm2</h2><p><a href="https://www.iterm2.com/" target="_blank" rel="external">https://www.iterm2.com/</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew cask install iterm2</div></pre></td></tr></table></figure>
 <h2 id="安装IntelliJ-Idea"><a href="#安装IntelliJ-Idea" class="headerlink" title="安装IntelliJ Idea"></a>安装IntelliJ Idea</h2><p><a href="https://www.jetbrains.com/idea/" target="_blank" rel="external">https://www.jetbrains.com/idea/</a><br>下载配置文件：<a href="https://github.com/myoss/IntelliJIdea-Config-MacOS" target="_blank" rel="external">https://github.com/myoss/IntelliJIdea-Config-MacOS</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> /Users/jerry/Library/Preferences/IntelliJIdea2016.3</div><div class="line">$ git <span class="built_in">clone</span> git@github.com:myoss/IntelliJIdea-Config-MacOS.git .</div><div class="line"></div><div class="line">$ vi fileTemplates/includes/File\ Header.java</div><div class="line"><span class="comment"># 将 ` * @author $&#123;USER&#125; $fdate` 中的 `$&#123;USER&#125;` 替换为你需要的名字，默认是电脑的账户名</span></div></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> /Users/jerry/Library/Preferences/IntelliJIdea2016.3</div><div class="line">$ git <span class="built_in">clone</span> git@github.com:myoss/IntelliJIdea-Config-MacOS.git .</div><div class="line"></div><div class="line">$ vi fileTemplates/includes/File\ Header.java</div><div class="line"><span class="comment"># 将 ` * @author $&#123;USER&#125; $fdate` 中的 `$&#123;USER&#125;` 替换为你需要的名字，默认是电脑的账户名</span></div></pre></td></tr></table></figure>
+<h2 id="安装git-gui工具SourceTree"><a href="#安装git-gui工具SourceTree" class="headerlink" title="安装git gui工具SourceTree"></a>安装git gui工具SourceTree</h2><p><a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">https://www.sourcetreeapp.com/</a> 目前是免费的工具，需要注册一下他们家的账户才能使用。</p>
+<h2 id="安装dos2unix命令转化文件的换行符"><a href="#安装dos2unix命令转化文件的换行符" class="headerlink" title="安装dos2unix命令转化文件的换行符"></a>安装dos2unix命令转化文件的换行符</h2><p>Windows和Linux中文件的换行符的不同，导致文件见的一些“不兼容”问题，通过unix2dos 和dos2unix来实现互相转换。为了解决<code>git add</code>的时候的错误<code>fatal: CRLF would be replaced by LF</code>，或者用来将文件中的<code>CRLF</code>转换为<code>LF</code>。<a href="http://linuxcommand.org/man_pages/dos2unix1.html" target="_blank" rel="external">http://linuxcommand.org/man_pages/dos2unix1.html</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install dos2unix</div></pre></td></tr></table></figure>
+<p><code>-k</code> 保持文件时间戳不变<br><code>-n</code> 新文件模式，待修改的源文件重定向到新的文件中<br><code>-o</code> 旧文件模式，将修改后的内容保存在源文件中，默认就是此模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ dos2unix -k -n source.sql target.sql <span class="comment">#将替换后的文件保存在target.sql中，不改变source.sql原始文件</span></div><div class="line">$ dos2unix -k source.sql <span class="comment">#替换文件</span></div><div class="line">$ find . -name *.sql | xargs dos2unix -k <span class="comment">#批量替换文件</span></div></pre></td></tr></table></figure>
+<p><code>unix2dos</code> UNIX(LF) -&gt; DOS(CRLF)<br><code>dos2unix</code> DOS(CRLF) -&gt; UNIX(LF)<br><code>mac2unix</code> MAC(R) -&gt; UNIX(LF)</p>
+<p>使用<code>cat</code>命令查看不可见的字符：<a href="http://os.51cto.com/art/201310/413568.htm" target="_blank" rel="external">http://os.51cto.com/art/201310/413568.htm</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$ cat -T test.txt <span class="comment">#用cat -T命令来显示TAB键的字符^I</span></div><div class="line">testing </div><div class="line">^I^Itesting </div><div class="line"> </div><div class="line">more testing </div><div class="line">^I </div><div class="line"></div><div class="line">$ cat -E /tmp/test.txt <span class="comment">#用cat -E命令来显示行尾的结束字符$</span></div><div class="line">testing$ </div><div class="line">        testing </div><div class="line">  $ </div><div class="line"></div><div class="line">$ cat -A /tmp/testing.txt <span class="comment">#用cat -A命令就可以显示所有不可见的字符</span></div><div class="line">testing$ </div><div class="line">^I^Itesting^L^H$</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
