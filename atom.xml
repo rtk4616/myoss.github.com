@@ -1076,7 +1076,7 @@
     <link href="http://myoss.github.io/2016/Git%E6%93%8D%E4%BD%9C/"/>
     <id>http://myoss.github.io/2016/Git操作/</id>
     <published>2016-01-20T06:37:00.000Z</published>
-    <updated>2017-02-12T09:53:04.000Z</updated>
+    <updated>2018-04-08T14:34:54.583Z</updated>
     
     <content type="html"><![CDATA[<p>花了好几天的时间，才迁移完<a href="https://github.com/myoss/study/blob/master/git_notes.txt" target="_blank" rel="external">git学习笔记</a>，进行了重新整理，记录了常用操作。不知不觉<code>Git</code>已经用了2年的时间，虽然不久，但已经深深爱上了这个家伙~~~</p>
 <a id="more"></a>
@@ -1105,6 +1105,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global core.safecrlf warn</div></pre></td></tr></table></figure>
 <h3 id="core-quotepath"><a href="#core-quotepath" class="headerlink" title="core.quotepath"></a>core.quotepath</h3><p>在使用git的时候，经常会碰到有一些中文文件名或者路径被转义成\xx\xx\xx之类的，此时可以通过git的配置来改变默认转义</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global core.quotepath <span class="literal">false</span></div></pre></td></tr></table></figure>
+<h3 id="core-pager"><a href="#core-pager" class="headerlink" title="core.pager"></a>core.pager</h3><p>core.pager指定 Git 运行诸如log、diff等所使用的分页器，你能设置成用more或者任何你喜欢的分页器（默认用的是less）， 当然你也可以什么都不用，设置空字符串：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global core.pager <span class="string">''</span></div></pre></td></tr></table></figure>
 <h3 id="其它配置"><a href="#其它配置" class="headerlink" title="其它配置"></a>其它配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git config --global core.editor vim <span class="comment">#设置文本编辑器</span></div><div class="line">git config --global color.ui <span class="literal">true</span></div><div class="line">git config --global alias.st status <span class="comment">#设置别名</span></div><div class="line">git config receive.denyNonFastForwards <span class="literal">true</span> <span class="comment">#禁止非快进试推送</span></div><div class="line">git config --global merge.tool kdiff3</div><div class="line">git config --global diff.word.textconv strings <span class="comment">#在比较前把Word文件转换成文本文件</span></div></pre></td></tr></table></figure>
 <hr>
 <h1 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h1><hr>
